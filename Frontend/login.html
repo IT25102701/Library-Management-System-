@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0B1028">
+  <title>Login | SmartLibrary Connect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/lumina.css">
+  <script src="js/theme.js"></script>
+  <script src="js/motion.js" defer></script>
+  <script src="js/chatbot-config.js" defer></script>
+  <script src="js/chatbot.js" defer></script>
+</head>
+<body class="auth-page">
+<div class="auth-layout">
+  <section class="auth-art">
+    <div class="sparkles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <a class="nav-logo" href="index.html" aria-label="SmartLibrary Connect home"><i class="fas fa-book-open" aria-hidden="true"></i><span>SmartLibrary <em>Connect</em></span></a>
+    <div class="auth-copy">
+      <span class="hero-label">Secure role-based access</span>
+      <h1>Welcome back to your library.</h1>
+      <p>Members, librarians and administrators are taken directly to the workspace that matches their account role.</p>
+      <div class="auth-benefits">
+          <span><i class="fas fa-shield-halved" aria-hidden="true"></i> Secure account access</span>
+          <span><i class="fas fa-layer-group" aria-hidden="true"></i> Role-based dashboards</span>
+          <span><i class="fas fa-bell" aria-hidden="true"></i> Library notifications</span>
+      </div>
+    </div>
+    <small>SmartLibrary Connect • Secure Library Access</small>
+  </section>
+  <main class="auth-form-wrap" id="main">
+    <div class="auth-tools"><button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light mode" title="Switch to light mode"><span class="theme-toggle-track" aria-hidden="true"><i class="fas fa-sun"></i><i class="fas fa-moon"></i><span class="theme-toggle-knob"></span></span></button></div>
+    <form class="auth-card" id="form">
+      <a class="auth-back" href="index.html"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to home</a>
+      <span class="hero-label">Account access</span>
+      <h1>Welcome back</h1>
+      <p>Enter your registered email and password to continue.</p>
+      <div id="message" role="alert" aria-live="polite"></div>
+      <div class="form-group"><label for="email">Email address</label><input id="email" type="email" autocomplete="username" placeholder="name@example.com" required></div>
+      <div class="form-group"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Enter your password" required></div>
+      <button class="btn btn-primary auth-submit">Login <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      <p class="auth-switch">New member? <a href="register.html">Create an account</a></p>
+      <div class="auth-note"><i class="fas fa-circle-info" aria-hidden="true"></i><span>Your dashboard opens automatically according to your assigned role.</span></div>
+    </form>
+  </main>
+</div>
+<script src="js/api.js"></script><script src="js/library.js"></script><script>document.getElementById('form').onsubmit=async e=>{e.preventDefault();const msg=document.getElementById('message');try{const u=await api.login(document.getElementById('email').value.trim(),document.getElementById('password').value);session.set(u);const after=localStorage.getItem('after_login');localStorage.removeItem('after_login');location.href=after||(u.role==='ADMIN'?'admin-dashboard.html':u.role==='LIBRARIAN'?'librarian-dashboard.html':'member-dashboard.html')}catch(err){msg.innerHTML=`<div class="alert alert-error">${escapeHtml(err.message)}</div>`}};</script></body></html>
