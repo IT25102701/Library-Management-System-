@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0B1028">
+  <title>Book | SmartLibrary Connect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/lumina.css">
+  <script src="js/theme.js"></script>
+  <script src="js/motion.js" defer></script>
+  <script src="js/chatbot-config.js" defer></script>
+  <script src="js/chatbot.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="navbar" aria-label="Main">
+  <a class="nav-logo" href="index.html" aria-label="SmartLibrary Connect home"><i class="fas fa-book-open" aria-hidden="true"></i><span>SmartLibrary <em>Connect</em></span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="browse.html">Browse</a></li>
+    <li><a href="resources.html">Academic Resources</a></li>
+    <li><a href="member-dashboard.html">My Library</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light mode" title="Switch to light mode"><span class="theme-toggle-track" aria-hidden="true"><i class="fas fa-sun"></i><i class="fas fa-moon"></i><span class="theme-toggle-knob"></span></span></button>
+    <div id="authActions"></div>
+  </div>
+</nav>
+<main class="container" id="main">
+  <div id="detail" class="detail-wrap"><div class="empty-state">Loading book...</div></div>
+  <section class="reviews-section" aria-labelledby="reviewsTitle">
+    <div class="section-head"><div><h2 id="reviewsTitle">Member reviews</h2><p>Ratings and comments from library members.</p></div></div>
+    <div id="reviews"></div>
+  </section>
+</main>
+<footer class="footer compact-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand"><a class="nav-logo" href="index.html" aria-label="SmartLibrary Connect home"><i class="fas fa-book-open" aria-hidden="true"></i><span>SmartLibrary <em>Connect</em></span></a><p>Search, reserve and manage library resources from one place.</p></div>
+    <div><h4>Explore</h4><a href="browse.html">Browse Books</a><a href="resources.html">Academic Resources</a></div>
+    <div><h4>Account</h4><a href="login.html">Login</a><a href="member-dashboard.html">My Library</a></div>
+  </div>
+</footer>
+<script src="js/api.js"></script><script src="js/library.js"></script><script>
+const id=new URLSearchParams(location.search).get('id');async function load(){try{const [b,revs]=await Promise.all([api.publicBook(id),api.bookReviews(id)]);document.title=`${b.title} | SmartLibrary Connect`;document.getElementById('detail').innerHTML=`<div class="detail-grid"><div class="detail-cover">${b.coverUrl?`<img src="${escapeHtml(b.coverUrl)}" alt="${escapeHtml(b.title)}">`:'<i class="fas fa-book-open"></i>'}</div><div class="detail-info"><span class="hero-label">${escapeHtml(b.category?.name||'Book')}</span><h1>${escapeHtml(b.title)}</h1><p style="font-size:1.05rem;color:#c4b5fd;margin:.6rem 0">by ${escapeHtml(b.author?.name||'Unknown Author')}</p><div><span class="pill">ISBN ${escapeHtml(b.isbn)}</span>${b.publisher?`<span class="pill">${escapeHtml(b.publisher.name)}</span>`:''}${b.publishedYear?`<span class="pill">${b.publishedYear}</span>`:''}</div><p style="margin:1.7rem 0;line-height:1.8">${escapeHtml(b.description||'No description available.')}</p><div class="alert ${b.availableCopies>0?'alert-success':'alert-error'}">${b.availableCopies>0?`${b.availableCopies} copy/copies available now.`:'All copies are currently unavailable.'}</div><div style="display:flex;gap:.7rem;flex-wrap:wrap"><button class="btn btn-primary" ${b.availableCopies>0?'':'disabled'} onclick="quickReserve(${b.id})"><i class="fas fa-bookmark"></i> Reserve Book</button><button class="btn btn-outline" id="wishlistBtn"><i class="fas fa-heart"></i> Add to Wishlist</button></div><div id="reviewFormArea" style="margin-top:2rem"></div></div></div>`;const u=session.get();if(document.getElementById('wishlistBtn'))document.getElementById('wishlistBtn').onclick=async()=>{if(!u||u.role!=='MEMBER'){localStorage.setItem('after_login',location.href);location.href='login.html';return;}try{await api.addWishlist(Number(id));toast('Added to wishlist.')}catch(e){toast(e.message,true)}};if(u?.role==='MEMBER'){document.getElementById('reviewFormArea').innerHTML=`<div style="border-top:1px solid var(--border);padding-top:1.5rem"><h3>Rate this book</h3><div class="form-group"><label>Rating (1–5)</label><input id="rating" type="number" min="1" max="5" value="5"></div><div class="form-group"><label>Comment</label><textarea id="comment" style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.8rem;color:white" rows="3"></textarea></div><button class="btn btn-outline" id="saveReview" style="margin-top:1rem">Save Review</button></div>`;document.getElementById('saveReview').onclick=async()=>{try{await api.saveReview({bookId:Number(id),rating:Number(document.getElementById('rating').value),comment:document.getElementById('comment').value});toast('Review saved.');setTimeout(()=>location.reload(),500)}catch(e){toast(e.message,true)}}}document.getElementById('reviews').innerHTML=revs.length?revs.map(r=>`<div class="review-card"><div style="display:flex;justify-content:space-between"><strong>${escapeHtml(r.member.name)}</strong><span style="color:#fbbf24">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span></div><p style="margin-top:.6rem">${escapeHtml(r.comment||'')}</p></div>`).join(''):'<div class="empty-state">No reviews yet.</div>';}catch(e){document.getElementById('detail').innerHTML=`<div class="empty-state">${escapeHtml(e.message)}</div>`}}load();
+</script></body></html>

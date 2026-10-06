@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0B1028">
+  <title>Browse | SmartLibrary Connect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/lumina.css">
+  <script src="js/theme.js"></script>
+  <script src="js/motion.js" defer></script>
+  <script src="js/chatbot-config.js" defer></script>
+  <script src="js/chatbot.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="navbar" aria-label="Main">
+  <a class="nav-logo" href="index.html" aria-label="SmartLibrary Connect home"><i class="fas fa-book-open" aria-hidden="true"></i><span>SmartLibrary <em>Connect</em></span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a class="active" aria-current="page" href="browse.html">Browse</a></li>
+    <li><a href="resources.html">Academic Resources</a></li>
+    <li><a href="member-dashboard.html">My Library</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light mode" title="Switch to light mode"><span class="theme-toggle-track" aria-hidden="true"><i class="fas fa-sun"></i><i class="fas fa-moon"></i><span class="theme-toggle-knob"></span></span></button>
+    <div id="authActions"></div>
+  </div>
+</nav>
+<main class="container" id="main">
+  <header class="page-head page-hero" data-banner="browse" data-reveal>
+    <span class="hero-label">Library catalogue</span>
+    <h1>Find your next book</h1>
+    <p>Search by title, author, ISBN or category and check real-time copy availability.</p>
+  </header>
+  <div class="toolbar" role="search">
+    <input id="search" placeholder="Search title, author, ISBN or category" aria-label="Search the catalogue">
+    <select id="category" aria-label="Filter by category"><option value="">All categories</option></select>
+    <button class="btn btn-primary" id="searchBtn"><i class="fas fa-search" aria-hidden="true"></i> Search</button>
+  </div>
+  <div id="grid" class="book-grid" aria-live="polite"><div class="empty-state">Loading books...</div></div>
+</main>
+<footer class="footer compact-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand"><a class="nav-logo" href="index.html" aria-label="SmartLibrary Connect home"><i class="fas fa-book-open" aria-hidden="true"></i><span>SmartLibrary <em>Connect</em></span></a><p>Search, reserve and manage library resources from one place.</p></div>
+    <div><h4>Explore</h4><a href="browse.html">Browse Books</a><a href="resources.html">Academic Resources</a></div>
+    <div><h4>Account</h4><a href="login.html">Login</a><a href="member-dashboard.html">My Library</a></div>
+  </div>
+</footer>
+<script src="js/api.js"></script><script src="js/library.js"></script><script>
+const p=new URLSearchParams(location.search);document.getElementById('search').value=p.get('q')||'';async function init(){try{const cats=await api.publicCategories();document.getElementById('category').innerHTML='<option value="">All categories</option>'+cats.map(c=>`<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');if(p.get('categoryId'))document.getElementById('category').value=p.get('categoryId');load()}catch(e){document.getElementById('grid').innerHTML=`<div class="empty-state">${escapeHtml(e.message)}</div>`}}async function load(){const host=document.getElementById('grid');host.innerHTML='<div class="empty-state">Loading...</div>';try{const data=await api.publicBooks(document.getElementById('search').value.trim(),document.getElementById('category').value);host.innerHTML=data.length?data.map(bookCard).join(''):'<div class="empty-state"><i class="fas fa-book fa-2x"></i><h3 style="margin-top:1rem">No books found</h3></div>'}catch(e){host.innerHTML=`<div class="empty-state">${escapeHtml(e.message)}</div>`}}document.getElementById('searchBtn').onclick=load;document.getElementById('category').onchange=load;document.getElementById('search').addEventListener('keydown',e=>{if(e.key==='Enter')load()});init();
+</script></body></html>
