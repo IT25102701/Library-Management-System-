@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0B1028">
+  <title>Academic Resources | SmartLibrary Connect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/lumina.css">
+  <script src="js/theme.js"></script>
+  <script src="js/motion.js" defer></script>
+  <script src="js/chatbot-config.js" defer></script>
+  <script src="js/chatbot.js" defer></script>
+</head>
+<body class="resources-page">
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="navbar" aria-label="Main">
+  <a class="nav-logo" href="index.html" aria-label="SmartLibrary Connect home"><i class="fas fa-book-open" aria-hidden="true"></i><span>SmartLibrary <em>Connect</em></span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="browse.html">Browse</a></li>
+    <li><a class="active" aria-current="page" href="resources.html">Academic Resources</a></li>
+    <li><a href="member-dashboard.html">My Library</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light mode" title="Switch to light mode"><span class="theme-toggle-track" aria-hidden="true"><i class="fas fa-sun"></i><i class="fas fa-moon"></i><span class="theme-toggle-knob"></span></span></button>
+    <div id="authActions"></div>
+  </div>
+</nav>
+<main class="container" id="main">
+  <header class="page-head page-hero" data-banner="resources" data-reveal>
+    <span class="hero-label">Research collection</span>
+    <h1>Research &amp; academic resources</h1>
+    <p>Search journals, research papers, theses, dissertations, reference materials and e-books available through the library.</p>
+  </header>
+  <div class="toolbar" role="search">
+    <input id="resourceSearch" placeholder="Search title, author or category" aria-label="Search academic resources">
+    <button class="btn btn-primary" id="resourceSearchBtn"><i class="fas fa-search" aria-hidden="true"></i> Search</button>
+  </div>
+  <div id="resourceGrid" class="book-grid" aria-live="polite"><div class="empty-state">Loading academic resources...</div></div>
+</main>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<footer class="footer compact-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand"><a class="nav-logo" href="index.html" aria-label="SmartLibrary Connect home"><i class="fas fa-book-open" aria-hidden="true"></i><span>SmartLibrary <em>Connect</em></span></a><p>Search, reserve and manage library resources from one place.</p></div>
+    <div><h4>Explore</h4><a href="browse.html">Browse Books</a><a href="resources.html">Academic Resources</a></div>
+    <div><h4>Account</h4><a href="login.html">Login</a><a href="member-dashboard.html">My Library</a></div>
+  </div>
+</footer>
+<script src="js/api.js"></script><script src="js/library.js"></script><script>
+const typeIcon=t=>({JOURNAL:'fa-newspaper',RESEARCH_PAPER:'fa-file-lines',THESIS:'fa-graduation-cap',DISSERTATION:'fa-scroll',REFERENCE_MATERIAL:'fa-book-atlas',EBOOK:'fa-tablet-screen-button'}[t]||'fa-file');
+function resourceCard(r){return `<article class="book-card library-card"><div class="book-thumb"><i class="fas ${typeIcon(r.resourceType)} book-placeholder"></i></div><div class="book-body"><div class="book-meta">${escapeHtml(String(r.resourceType||'RESOURCE').replaceAll('_',' '))}</div><div class="book-title">${escapeHtml(r.title)}</div><div class="book-author">${escapeHtml(r.author||'Library Resource')}</div><div style="color:var(--text-muted);font-size:.82rem;margin:.6rem 0">${escapeHtml(r.category||'General')}${r.publicationYear?' • '+r.publicationYear:''}</div><p style="color:var(--text-muted);font-size:.82rem;line-height:1.55;min-height:52px">${escapeHtml((r.description||'').slice(0,120))}</p><div class="card-actions"><button class="btn btn-outline" onclick="openResource(${r.id})">View</button>${r.resourceUrl?`<a class="btn btn-primary" href="${escapeHtml(r.resourceUrl)}" target="_blank" rel="noopener">Open Link</a>`:''}</div></div></article>`;}
+async function loadResources(){const host=document.getElementById('resourceGrid');host.innerHTML='<div class="empty-state">Loading...</div>';try{const data=await api.publicResources(document.getElementById('resourceSearch').value.trim());host.innerHTML=data.length?data.map(resourceCard).join(''):'<div class="empty-state"><i class="fas fa-graduation-cap fa-2x"></i><h3 style="margin-top:1rem">No academic resources found</h3></div>';}catch(e){host.innerHTML=`<div class="empty-state">${escapeHtml(e.message)}</div>`;}}
+window.openResource=async id=>{try{const r=await api.publicResource(id);alert(`${r.title}\n\nType: ${String(r.resourceType).replaceAll('_',' ')}\nAuthor: ${r.author||'—'}\nCategory: ${r.category||'—'}\nYear: ${r.publicationYear||'—'}\nViews: ${r.usageCount||0}\n\n${r.description||''}`);loadResources();}catch(e){toast(e.message,true)}};
+document.getElementById('resourceSearchBtn').onclick=loadResources;document.getElementById('resourceSearch').addEventListener('keydown',e=>{if(e.key==='Enter')loadResources()});loadResources();
+</script></body></html>

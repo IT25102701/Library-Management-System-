@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 460" width="600" height="460"><defs>
+<linearGradient id="peri" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9FB0FF"/><stop offset="1" stop-color="#6F7DFF"/></linearGradient>
+<linearGradient id="vio" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C3A6FF"/><stop offset="1" stop-color="#7B5BF0"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE0A0"/><stop offset="1" stop-color="#E0A447"/></linearGradient>
+<linearGradient id="teal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FF2DA"/><stop offset="1" stop-color="#2FB596"/></linearGradient>
+<linearGradient id="page" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7F4FF"/><stop offset="1" stop-color="#D9DDF7"/></linearGradient>
+<linearGradient id="ink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A3473"/><stop offset="1" stop-color="#151D45"/></linearGradient>
+<radialGradient id="halo" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#A383FF" stop-opacity=".55"/><stop offset="1" stop-color="#A383FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="halogold" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#F0C36A" stop-opacity=".6"/><stop offset="1" stop-color="#F0C36A" stop-opacity="0"/></radialGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#0B1028" flood-opacity=".45"/></filter>
+</defs>
+<ellipse cx="300" cy="230" rx="280" ry="200" fill="url(#halo)"/>
+<ellipse cx="300" cy="230" rx="140" ry="110" fill="url(#halogold)" opacity=".7"/>
+<g fill="none" stroke="#8FA0FF" stroke-opacity=".35" stroke-width="1.5"><circle cx="300" cy="230" r="170"/><circle cx="300" cy="230" r="215" stroke-dasharray="3 8"/></g>
+<g filter="url(#soft)">
+ <!-- journals -->
+ <g transform="rotate(-8 180 300)"><rect x="110" y="250" width="150" height="110" rx="10" fill="url(#ink)" stroke="#8FA0FF" stroke-opacity=".4"/>
+  <rect x="126" y="270" width="80" height="8" rx="4" fill="#F0C36A"/><rect x="126" y="288" width="110" height="6" rx="3" fill="#C7CDEA" opacity=".5"/><rect x="126" y="302" width="96" height="6" rx="3" fill="#C7CDEA" opacity=".5"/>
+  <rect x="126" y="320" width="54" height="24" rx="5" fill="url(#peri)" opacity=".85"/></g>
+ <!-- open thesis -->
+ <path d="M300 372 C262 352 214 350 170 360 L170 300 C214 290 262 294 300 314Z" fill="url(#page)"/>
+ <path d="M300 372 C338 352 386 350 430 360 L430 300 C386 290 338 294 300 314Z" fill="url(#page)"/>
+ <path d="M170 360 C214 350 262 352 300 372 C338 352 386 350 430 360 L430 372 C386 362 338 366 300 384 C262 366 214 362 170 372Z" fill="url(#vio)"/>
+ <path d="M186 314 C230 306 266 310 290 322" stroke="#B9C1EA" stroke-width="2.4" fill="none"/><path d="M186 326 C230 318 266 322 290 334" stroke="#B9C1EA" stroke-width="2.4" fill="none"/><path d="M186 338 C230 330 266 334 290 346" stroke="#B9C1EA" stroke-width="2.4" fill="none"/>
+ <g transform="translate(316 316)"><rect x="0" y="0" width="48" height="34" rx="4" fill="none" stroke="#8FA0FF" stroke-width="2"/><path d="M6 28 L18 16 L28 24 L42 8" stroke="#2FB596" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+ <path d="M372 318 h40 M372 330 h32" stroke="#B9C1EA" stroke-width="2.4" stroke-linecap="round"/>
+ <!-- scroll -->
+ <g transform="rotate(10 470 260)"><rect x="430" y="210" width="92" height="120" rx="8" fill="url(#page)"/><rect x="424" y="202" width="104" height="18" rx="9" fill="url(#gold)"/><rect x="424" y="322" width="104" height="18" rx="9" fill="url(#gold)"/>
+  <rect x="444" y="236" width="64" height="5" rx="2.5" fill="#9AA3D8"/><rect x="444" y="250" width="46" height="5" rx="2.5" fill="#9AA3D8"/><rect x="444" y="264" width="64" height="5" rx="2.5" fill="#9AA3D8"/><rect x="444" y="278" width="46" height="5" rx="2.5" fill="#9AA3D8"/><rect x="444" y="292" width="64" height="5" rx="2.5" fill="#9AA3D8"/>
+  <circle cx="500" cy="306" r="11" fill="#FF8FA3"/></g>
+ <!-- graduation cap -->
+ <g transform="translate(300 150)">
+  <path d="M-46 8 v34 c0 14 92 14 92 0 v-34" fill="url(#ink)" stroke="#8FA0FF" stroke-opacity=".5"/>
+  <path d="M0 -36 L96 4 L0 44 L-96 4Z" fill="url(#peri)"/>
+  <path d="M0 -36 L96 4 L0 44 L-96 4Z" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>
+  <path d="M60 18 v44" stroke="url(#gold)" stroke-width="4"/><circle cx="60" cy="66" r="8" fill="url(#gold)"/>
+ </g>
+</g>
+<path transform="translate(120 120) scale(10)" d="M0,-1 C.15,-.15 .15,-.15 1,0 C.15,.15 .15,.15 0,1 C-.15,.15 -.15,.15 -1,0 C-.15,-.15 -.15,-.15 0,-1Z" fill="#FFE7B0" opacity="1" filter="url(#glow)"/><path transform="translate(500 120) scale(7)" d="M0,-1 C.15,-.15 .15,-.15 1,0 C.15,.15 .15,.15 0,1 C-.15,.15 -.15,.15 -1,0 C-.15,-.15 -.15,-.15 0,-1Z" fill="#C9D2FF" opacity="1" filter="url(#glow)"/><path transform="translate(80 250) scale(6)" d="M0,-1 C.15,-.15 .15,-.15 1,0 C.15,.15 .15,.15 0,1 C-.15,.15 -.15,.15 -1,0 C-.15,-.15 -.15,-.15 0,-1Z" fill="#C9D2FF" opacity="1" filter="url(#glow)"/><path transform="translate(530 380) scale(7)" d="M0,-1 C.15,-.15 .15,-.15 1,0 C.15,.15 .15,.15 0,1 C-.15,.15 -.15,.15 -1,0 C-.15,-.15 -.15,-.15 0,-1Z" fill="#FFE7B0" opacity="1" filter="url(#glow)"/>
+<circle cx="200" cy="80" r="1.6" fill="#C9D2FF" opacity=".8"/><circle cx="420" cy="60" r="1.4" fill="#C9D2FF" opacity=".8"/><circle cx="560" cy="220" r="1.4" fill="#C9D2FF" opacity=".8"/><circle cx="60" cy="360" r="1.3" fill="#C9D2FF" opacity=".8"/><circle cx="380" cy="200" r="1.2" fill="#C9D2FF" opacity=".8"/>
+</svg>
