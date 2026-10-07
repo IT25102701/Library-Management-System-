@@ -1,0 +1,109 @@
+<!-- Tells the browser this is an HTML5 page. -->
+<!DOCTYPE html>
+<!-- Start of the page; the language is English. -->
+<html lang="en">
+<!-- Page information and the files it loads (not shown on screen). -->
+<head>
+  <!-- Use UTF-8 so every character displays correctly. -->
+  <meta charset="UTF-8">
+  <!-- Fit the page to the screen width on phones and tablets. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Colour of the browser bar on phones (updated by theme.js). -->
+  <meta name="theme-color" content="#0B1028">
+  <!-- Text shown in the browser tab: "My Library | SmartLibrary Connect". -->
+  <title>My Library | SmartLibrary Connect</title>
+  <!-- Connect early to https://fonts.googleapis.com so the fonts load faster. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- Connect early to https://fonts.gstatic.com so the fonts load faster. -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Load the Font Awesome icon set. -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Load the site's stylesheet. -->
+  <link rel="stylesheet" href="css/lumina.css">
+  <!-- Load light/dark theme switch (loaded first so the page does not flash). -->
+  <script src="js/theme.js"></script>
+  <!-- Load animations and scroll effects (after the page has loaded). -->
+  <script src="js/motion.js" defer></script>
+  <!-- Load chatbot settings (after the page has loaded). -->
+  <script src="js/chatbot-config.js" defer></script>
+  <!-- Load the AI library assistant (after the page has loaded). -->
+  <script src="js/chatbot.js" defer></script>
+  <!-- Load form validation (after the page has loaded). -->
+  <script src="js/validation.js" defer></script>
+</head><!-- end of page information and the files it loads (not shown on screen) -->
+<!-- The visible page. -->
+<body>
+<!-- Hidden "Skip to content" link for keyboard users (appears when focused): "Skip to content". -->
+<a class="skip-link" href="#main">Skip to content</a>
+<!-- Top navigation bar. -->
+<nav class="navbar" aria-label="Main">
+  <!-- Site logo and name; links back to the home page: "SmartLibrary Connect". -->
+  <a class="nav-logo" href="index.html" aria-label="SmartLibrary Connect home"><i class="fas fa-book-open" aria-hidden="true"></i><span>SmartLibrary <em>Connect</em></span></a>
+  <!-- Main menu of the site. -->
+  <ul class="nav-links">
+    <!-- Menu/list item: "Home". -->
+    <li><a href="index.html">Home</a></li>
+    <!-- Menu/list item: "Browse". -->
+    <li><a href="browse.html">Browse</a></li>
+    <!-- Menu/list item: "Academic Resources". -->
+    <li><a href="resources.html">Academic Resources</a></li>
+    <!-- Menu/list item: "My Library". -->
+    <li><a class="active" aria-current="page" href="member-dashboard.html">My Library</a></li>
+  </ul><!-- end of main menu of the site -->
+  <!-- Right side of the navbar: theme switch and login/user buttons. -->
+  <div class="nav-actions">
+    <!-- Light/dark mode switch (handled by js/theme.js). -->
+    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light mode" title="Switch to light mode"><span class="theme-toggle-track" aria-hidden="true"><i class="fas fa-sun"></i><i class="fas fa-moon"></i><span class="theme-toggle-knob"></span></span></button>
+    <!-- Filled by library.js with Login/Register or the user's name and Logout. -->
+    <div id="authActions"></div>
+  </div><!-- end of right side of the navbar -->
+</nav><!-- end of top navigation bar -->
+<!-- Centred content area with page margins. -->
+<main class="container" id="main">
+  <!-- Page heading banner. -->
+  <header class="page-head page-hero" data-banner="member" data-reveal>
+    <!-- Small label above a heading: "Member dashboard". -->
+    <span class="hero-label">Member dashboard</span>
+    <!-- Welcome heading (filled by member.js). -->
+    <h1 id="welcome">My Library</h1>
+    <!-- Paragraph: "Manage reservations, borrowed books, fines, feedback and library notif...". -->
+    <p>Manage reservations, borrowed books, fines, feedback and library notifications.</p>
+  </header><!-- end of page heading banner -->
+  <!-- Member dashboard layout: sidebar and panel. -->
+  <div class="dash-layout">
+    <!-- Member dashboard sidebar with the menu. -->
+    <aside class="dash-sidebar" aria-label="Member navigation">
+      <!-- Round avatar with the member's first letter. -->
+      <div class="member-avatar" id="avatar" aria-hidden="true">M</div>
+      <!-- The member's name (filled by member.js). -->
+      <h3 id="memberName" class="member-name"></h3>
+      <!-- The member's email (filled by member.js). -->
+      <p id="memberEmail" class="member-email"></p>
+      <!-- List of member dashboard views; each link has a data-view name. -->
+      <ul class="dash-nav">
+        <!-- Menu/list item: "Overview". -->
+        <li><a class="active" href="#" data-view="overview"><i class="fas fa-house" aria-hidden="true"></i> Overview</a></li>
+        <!-- Menu/list item: "Wishlist". -->
+        <li><a href="#" data-view="wishlist"><i class="fas fa-heart" aria-hidden="true"></i> Wishlist</a></li>
+        <!-- Menu/list item: "Reservations". -->
+        <li><a href="#" data-view="reservations"><i class="fas fa-bookmark" aria-hidden="true"></i> Reservations</a></li>
+        <!-- Menu/list item: "Borrowed Books". -->
+        <li><a href="#" data-view="borrowings"><i class="fas fa-book-reader" aria-hidden="true"></i> Borrowed Books</a></li>
+        <!-- Menu/list item: "Fines". -->
+        <li><a href="#" data-view="fines"><i class="fas fa-coins" aria-hidden="true"></i> Fines</a></li>
+        <!-- Menu/list item: "Feedback". -->
+        <li><a href="#" data-view="feedback"><i class="fas fa-comments" aria-hidden="true"></i> Feedback</a></li>
+        <!-- Menu/list item: "Notifications". -->
+        <li><a href="#" data-view="notifications"><i class="fas fa-bell" aria-hidden="true"></i> Notifications</a></li>
+        <!-- Menu/list item: "Profile & Password". -->
+        <li><a href="#" data-view="profile"><i class="fas fa-user-gear" aria-hidden="true"></i> Profile &amp; Password</a></li>
+      </ul><!-- end of list of member dashboard views; each link has a data-view name -->
+    </aside><!-- end of member dashboard sidebar with the menu -->
+    <!-- The current member dashboard view is drawn here (by member.js). -->
+    <section id="panel" class="dash-panel" aria-live="polite"></section>
+  </div><!-- end of member dashboard layout -->
+</main><!-- end of centred content area with page margins -->
+<!-- Area for short pop-up messages. -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<!-- Load the server calls (api) and the login session helper, then shared helpers (pop-ups, book cards, navbar login area), then the member dashboard logic. -->
+<script src="js/api.js"></script><script src="js/library.js"></script><script src="js/member.js"></script></body></html>
